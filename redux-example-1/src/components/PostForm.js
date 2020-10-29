@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { createPost } from '../actions/postActions'
 
-export default function PostForm() {
+function PostForm(props) {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
 
@@ -16,15 +18,9 @@ export default function PostForm() {
       title,
       body
     }
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(newPost)
-    })
-    .then(res => res.json())
-    .then(data => console.log(data))
+   
+    props.createPost(newPost)
+
   }
   
   return (
@@ -44,3 +40,5 @@ export default function PostForm() {
     </div>
   )
 }
+
+export default connect(null, { createPost })(PostForm)
