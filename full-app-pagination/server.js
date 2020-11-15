@@ -2,14 +2,15 @@ const express = require('express')
 const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
+require('dotenv/config')
 
 app.use(cors())
 
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'keke',
-  database: 'test'
+  host: process.env.host,
+  user: process.env.user,
+  password: process.env.password,
+  database: process.env.database
 })
 
 db.connect(err => {
@@ -23,15 +24,12 @@ db.connect(err => {
     i++
   }
 
-
-  console.log('Connected to mysql')
 })
 
 // Pagination middleware
 const paginatedResults = model => (req, res, next) => {
   const page = parseInt(req.query.page)
   const limit = parseInt(req.query.limit)
-  console.log(page, limit);
 
   const startIndex = (page - 1) * limit
   const endIndex = page * limit

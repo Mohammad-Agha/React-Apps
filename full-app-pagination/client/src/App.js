@@ -12,10 +12,8 @@ const App = () => {
   }, [offset])
 
   const getData = async url => {
-    console.log(offset + 1, perPage);
     const response = await fetch(url)
     const json = await response.json()
-    console.log(json.results);
     // const paginate = json.slice(offset, offset + perPage)
 
     const postData = json.results.map((data, index) => (
